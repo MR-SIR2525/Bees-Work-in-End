@@ -413,7 +413,7 @@
                   {"test": "hourly_clock_time", "operator": ">=", "value": 13000},
                   {"test": "hourly_clock_time", "operator": "<", "value": 21000},
 
-                  // Assume we are already going home if we have nectar for these...
+                  // Assume we are already going home if we have nectar
                   {
                     "test": "bool_property",
                     "operator": "!=",
@@ -430,6 +430,7 @@
         "minecraft:environment_sensor": {
           "triggers": [
             {
+              // Abort if it's daytime in the overworld
               "event": "abort_sheltering",
               "filters": {
                 "all_of": [
@@ -707,7 +708,7 @@
             "add": {"component_groups": ["shelter_detection"]},
             //for testing
             "queue_command": {
-              "command": "msg @a[r=200] §eIn overworld, added shelter_detection."
+              "command": "msg @a[r=40,tag=bee_debug] §eOverworld=TRUE, shelter_detection."
             }
           },
           {
@@ -715,7 +716,7 @@
             "add": {"component_groups": ["shelter_detection_not_overworld"]},
             //for testing
             "queue_command": {
-              "command": "msg @a[r=200] §eNOT overworld, added shelter_detection_not_overworld."
+              "command": "msg @a[r=40,tag=bee_debug] §eOverworld=FALSE, shelter_detection_not_overworld."
             }
           }
         ]
@@ -728,7 +729,7 @@
             "add": {"component_groups": ["abort_shelter_detection"]},
             //for testing
             "queue_command": {
-              "command": "msg @a[r=200] §eIn overworld, added abort_shelter_detection."
+              "command": "msg @a[r=40,tag=bee_debug] §eOverworld=TRUE, abort_shelter_detection."
             }
           },
           {
@@ -736,7 +737,7 @@
             "add": {"component_groups": ["abort_shelter_detection_not_overworld"]},
             //for testing
             "queue_command": {
-              "command": "msg @a[r=200] §eNOT overworld, added abort_shelter_detection_not_overworld."
+              "command": "msg @a[r=40,tag=bee_debug] §eOverworld=FALSE, abort_shelter_detection_not_overworld."
             }
           }
         ]
@@ -970,6 +971,7 @@
           ]
         }
       },
+
       "seek_shelter": {
         "remove": {
           "component_groups": [
@@ -988,6 +990,7 @@
         },
         "trigger": "abort_shelter_detection"
       },
+
       "abort_sheltering": {
         "remove": {
           "component_groups": [
@@ -1000,6 +1003,7 @@
         "add": {"component_groups": ["look_for_food"]},
         "trigger": "shelter_detection"
       },
+
       "countdown_to_perish_event": {
         "remove": {
           "component_groups": [
