@@ -372,11 +372,11 @@
                     "test": "bool_property",
                     "operator": "!=",
                     "domain": "minecraft:has_nectar"
-                  },
-                  {
-                    "test": "has_biome_tag",
-                    "value": "overworld"
                   }
+                  // {
+                  //   "test": "has_biome_tag",
+                  //   "value": "overworld"
+                  // }
                 ]
               }
             }
