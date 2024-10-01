@@ -704,11 +704,19 @@
         "sequence": [
           {
             "filters": [{"test": "in_overworld", "value": true}],
-            "add": {"component_groups": ["shelter_detection"]}
+            "add": {"component_groups": ["shelter_detection"]},
+            //for testing
+            "queue_command": {
+              "command": "msg @a[r=200] §eIn overworld, added shelter_detection."
+            }
           },
           {
             "filters": [{"test": "in_overworld", "value": false}],
-            "add": {"component_groups": ["shelter_detection_not_overworld"]}
+            "add": {"component_groups": ["shelter_detection_not_overworld"]},
+            //for testing
+            "queue_command": {
+              "command": "msg @a[r=200] §eNOT overworld, added shelter_detection_not_overworld."
+            }
           }
         ]
       },
@@ -717,11 +725,19 @@
         "sequence": [
           {
             "filters": [{"test": "in_overworld", "value": true}],
-            "add": {"component_groups": ["abort_shelter_detection"]}
+            "add": {"component_groups": ["abort_shelter_detection"]},
+            //for testing
+            "queue_command": {
+              "command": "msg @a[r=200] §eIn overworld, added abort_shelter_detection."
+            }
           },
           {
             "filters": [{"test": "in_overworld", "value": false}],
-            "add": {"component_groups": ["abort_shelter_detection_not_overworld"]}
+            "add": {"component_groups": ["abort_shelter_detection_not_overworld"]},
+            //for testing
+            "queue_command": {
+              "command": "msg @a[r=200] §eNOT overworld, added abort_shelter_detection_not_overworld."
+            }
           }
         ]
       },
