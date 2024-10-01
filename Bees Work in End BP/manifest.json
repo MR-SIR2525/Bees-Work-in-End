@@ -1,17 +1,17 @@
 {
     "format_version": 2,
     "header": {
-        "name": "Bees Work in the End v1.0.0",
-        "description": "Alters bee behavior to allow them to work in the End just as they do in the overworld. Made by MRxSIR.",
+        "name": "Bees Work in the End v1.0.1",
+        "description": "Bees will now work mostly normal in the Nether and End, looking for food and returning to their hive when the overworld has nighttime. So, you can sorta track time with bees now. Made by MRxSIR.",
         "uuid": "debf64e3-23da-4380-b138-c4f6f9f0fc65",
         "min_engine_version": [1, 20, 10],
-        "version": [1, 0, 0]
+        "version": [1, 0, 1]
     },
     "modules": [
         {
             "type": "data",
             "uuid": "30fe494a-f77f-45d8-983f-a08d101cff21",
-            "version": [1, 0, 0]
+            "version": [1, 0, 1]
         }
     ]
 }

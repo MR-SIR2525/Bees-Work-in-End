@@ -372,11 +372,11 @@
                     "test": "bool_property",
                     "operator": "!=",
                     "domain": "minecraft:has_nectar"
+                  },
+                  {
+                    "test": "has_biome_tag",
+                    "value": "overworld"
                   }
-                  // {
-                  //   "test": "has_biome_tag",
-                  //   "value": "overworld"
-                  // }
                 ]
               }
             }
@@ -391,12 +391,50 @@
               "event": "abort_sheltering",
               "filters": {
                 "all_of": [
+                  {"test": "weather", "operator": "==", "value": "clear"},
+                  {"test": "is_daytime", "value": true}
+                ]
+              }
+            }
+          ]
+        }
+      },
+
+      // I would like a timer... but it would clash with other timers. So, we're just gonna make
+      // bees seek shelter when it's night in the overworld, but not the whole night. They
+      // will be pseudo clocks for people in the End, I guess.
+      "shelter_detection_not_overworld": {
+        "minecraft:environment_sensor": {
+          "triggers": [
+            {
+              "event": "seek_shelter",
+              "filters": {
+                "all_of": [
+                  {"test": "hourly_clock_time", "operator": ">=", "value": 13000},
+                  {"test": "hourly_clock_time", "operator": "<", "value": 21000},
+
+                  // Assume we are already going home if we have nectar for these...
                   {
-                    "test": "weather", "operator": "==", "value": "clear"
-                  },
-                  {
-                    "test": "is_daytime", "value": true
+                    "test": "bool_property",
+                    "operator": "!=",
+                    "domain": "minecraft:has_nectar"
                   }
+                ]
+              }
+            }
+          ]
+        }
+      },
+
+      "abort_shelter_detection_not_overworld": {
+        "minecraft:environment_sensor": {
+          "triggers": [
+            {
+              "event": "abort_sheltering",
+              "filters": {
+                "all_of": [
+                  {"test": "hourly_clock_time", "operator": "<", "value": 13000},
+                  {"test": "hourly_clock_time", "operator": ">=", "value": 21000}
                 ]
               }
             }
@@ -619,10 +657,10 @@
             "add": {
               "component_groups": [
                 "track_attacker",
-                "shelter_detection",
                 "look_for_food"
               ]
-            }
+            },
+            "trigger": "shelter_detection"
           }
         ]
       },
@@ -631,22 +669,22 @@
         "add": {
           "component_groups": [
             "bee_baby",
-            "shelter_detection",
             "track_attacker",
             "look_for_food"
           ]
-        }
+        },
+        "trigger": "shelter_detection"
       },
 
       "minecraft:spawn_adult": {
         "add": {
           "component_groups": [
             "bee_adult",
-            "shelter_detection",
             "track_attacker",
             "look_for_food"
           ]
-        }
+        },
+        "trigger": "shelter_detection"
       },
 
       "minecraft:ageable_grow_up": {
@@ -662,6 +700,32 @@
         }
       },
 
+      "shelter_detection": {
+        "sequence": [
+          {
+            "filters": [{"test": "in_overworld", "value": true}],
+            "add": {"component_groups": ["shelter_detection"]}
+          },
+          {
+            "filters": [{"test": "in_overworld", "value": false}],
+            "add": {"component_groups": ["shelter_detection_not_overworld"]}
+          }
+        ]
+      },
+
+      "abort_shelter_detection": {
+        "sequence": [
+          {
+            "filters": [{"test": "in_overworld", "value": true}],
+            "add": {"component_groups": ["abort_shelter_detection"]}
+          },
+          {
+            "filters": [{"test": "in_overworld", "value": false}],
+            "add": {"component_groups": ["abort_shelter_detection_not_overworld"]}
+          }
+        ]
+      },
+
       "minecraft:exited_disturbed_hive": {
         "add": {
           "component_groups": [
@@ -675,6 +739,8 @@
             "has_nectar",
             "abort_shelter_detection",
             "shelter_detection",
+            "abort_shelter_detection_not_overworld",  //new
+            "shelter_detection_not_overworld",        //new
             "escape_fire"
           ]
         },
@@ -718,16 +784,17 @@
       "minecraft:exited_hive": {
         "add": {
           "component_groups": [
-            "look_for_food",
-            "shelter_detection"
+            "look_for_food"
           ]
         },
+        "trigger": "shelter_detection",
         "remove": {
           "component_groups": [
             "find_hive",
             "return_to_home",
             "has_nectar",
-            "abort_shelter_detection"
+            "abort_shelter_detection",
+            "abort_shelter_detection_not_overworld"
           ]
         },
         "set_property": {
@@ -799,10 +866,10 @@
       "calmed_down": {
         "add": {
           "component_groups": [
-            "shelter_detection",
             "return_to_home"
           ]
         },
+        "trigger": "shelter_detection",
         "remove": {
           "component_groups": [
             "angry_bee",
@@ -892,31 +959,30 @@
           "component_groups": [
             "look_for_food",
             "collect_nectar",
-            "shelter_detection"
+            "shelter_detection",
+            "shelter_detection_not_overworld"
           ]
         },
         "add": {
           "component_groups": [
             "default_sound",
-            "return_to_home",
-            "abort_shelter_detection"
+            "return_to_home"
+            // "abort_shelter_detection"
           ]
-        }
+        },
+        "trigger": "abort_shelter_detection"
       },
       "abort_sheltering": {
         "remove": {
           "component_groups": [
             "abort_shelter_detection",
+            "abort_shelter_detection_not_overworld",
             "return_to_home",
             "escape_fire"
           ]
         },
-        "add": {
-          "component_groups": [
-            "shelter_detection",
-            "look_for_food"
-          ]
-        }
+        "add": {"component_groups": ["look_for_food"]},
+        "trigger": "shelter_detection"
       },
       "countdown_to_perish_event": {
         "remove": {
