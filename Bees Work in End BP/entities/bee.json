@@ -705,19 +705,19 @@
         "sequence": [
           {
             "filters": [{"test": "in_overworld", "value": true}],
-            "add": {"component_groups": ["shelter_detection"]},
+            "add": {"component_groups": ["shelter_detection"]}
             //for testing
-            "queue_command": {
-              "command": "msg @a[r=40,tag=bee_debug] §eOverworld=TRUE, shelter_detection."
-            }
+            // "queue_command": {
+            //   "command": "msg @a[r=40,tag=bee_debug] §eOverworld=TRUE, shelter_detection."
+            // }
           },
           {
             "filters": [{"test": "in_overworld", "value": false}],
-            "add": {"component_groups": ["shelter_detection_not_overworld"]},
+            "add": {"component_groups": ["shelter_detection_not_overworld"]}
             //for testing
-            "queue_command": {
-              "command": "msg @a[r=40,tag=bee_debug] §eOverworld=FALSE, shelter_detection_not_overworld."
-            }
+            // "queue_command": {
+            //   "command": "msg @a[r=40,tag=bee_debug] §eOverworld=FALSE, shelter_detection_not_overworld."
+            // }
           }
         ]
       },
@@ -726,19 +726,19 @@
         "sequence": [
           {
             "filters": [{"test": "in_overworld", "value": true}],
-            "add": {"component_groups": ["abort_shelter_detection"]},
+            "add": {"component_groups": ["abort_shelter_detection"]}
             //for testing
-            "queue_command": {
-              "command": "msg @a[r=40,tag=bee_debug] §eOverworld=TRUE, abort_shelter_detection."
-            }
+            // "queue_command": {
+            //   "command": "msg @a[r=40,tag=bee_debug] §eOverworld=TRUE, abort_shelter_detection."
+            // }
           },
           {
             "filters": [{"test": "in_overworld", "value": false}],
-            "add": {"component_groups": ["abort_shelter_detection_not_overworld"]},
+            "add": {"component_groups": ["abort_shelter_detection_not_overworld"]}
             //for testing
-            "queue_command": {
-              "command": "msg @a[r=40,tag=bee_debug] §eOverworld=FALSE, abort_shelter_detection_not_overworld."
-            }
+            // "queue_command": {
+            //   "command": "msg @a[r=40,tag=bee_debug] §eOverworld=FALSE, abort_shelter_detection_not_overworld."
+            // }
           }
         ]
       },
